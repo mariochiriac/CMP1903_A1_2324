@@ -22,11 +22,14 @@ namespace CMP1903_A1_2324
         private Die dice_2 = new Die(); 
         private Die dice_3 = new Die();
 
-        // Creates a new List
-        public List<int> dice_list = new List<int>();
+        private List<int> _diceList = new List<int>(); // Creates a new encapsulated List
 
-        // Creates an integer that holds the sum of the dices
-        private int SumOfDices = 0;
+        private int SumOfDices = 0; // Creates an integer that holds the sum of the dices
+
+        public List<int> DiceList
+        {
+            get { return _diceList; }
+        }
 
         //Methods
 
@@ -38,20 +41,17 @@ namespace CMP1903_A1_2324
             {
                 int result = dice.Roll(); // Rolls each 'Die' object
                 Console.WriteLine("Diced Rolled: " + result); // Outputs the dice rolled
-                dice_list.Add(result); // Adds rolled dice to list
+                _diceList.Add(result); // Adds rolled dice to list
             }
         }
 
         // An encapsulated method that gets the dice total
         private int GetDiceTotal()
         {
-            // Converts list to array
-            int[] dice_array = dice_list.ToArray();
-
             // A loop that checks how many dice rolled have been added to a list
-            for (int i = 0; i < dice_array.Length; i++)
+            for (int i = 0; i < _diceList.Count; i++)
             {
-                SumOfDices += dice_array[i];
+                SumOfDices += _diceList[i];
             }
 
             return SumOfDices;
@@ -60,22 +60,21 @@ namespace CMP1903_A1_2324
         // An encapsulated method that outputs the summary data of the game
         private void GetSummary()
         {
-            int[] dice_array = dice_list.ToArray(); // Converts list to array for easier usability
-
-            int lowest = dice_array[0]; // Initialises the lowest number to first element of array
-            int highest = dice_array[0]; // Initialises the highest number to first element of array
-            int average = SumOfDices / dice_array.Length; // Gets the average number of the dices rolled
+            // Variables
+            int lowest = _diceList[0]; // Initialises the lowest number to first element of array
+            int highest = _diceList[0]; // Initialises the highest number to first element of array
+            int average = SumOfDices / _diceList.Count; // Gets the average number of the dices rolled
 
             // A loop that performs a search for the lowest and highest number
-            for (int i = 0; i < dice_list.ToArray().Length; i++) // Checks each index in the array
+            for (int i = 0; i < _diceList.Count; i++) // Checks each index in the array
             {
-                if (dice_array[i] < lowest) // Compares index in the array to the lowest number
+                if (_diceList[i] < lowest) // Compares index in the array to the lowest number
                 {
-                    lowest = dice_array[i]; // Sets the lowest number
+                    lowest = _diceList[i]; // Sets the lowest number
                 }
-                else if (dice_array[i] > highest) // Compares index in the array to the highest number
+                else if (_diceList[i] > highest) // Compares index in the array to the highest number
                 {
-                    highest = dice_array[i]; // Sets the highest number
+                    highest = _diceList[i]; // Sets the highest number
                 }
             }
 
