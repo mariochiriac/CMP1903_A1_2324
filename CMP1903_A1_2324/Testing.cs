@@ -18,15 +18,15 @@ namespace CMP1903_A1_2324
 
         //Method
 
-        public void Start_Test()
+        public void StartTest()
         {
             Console.WriteLine("=========== TEST VERSION ===========");
-            Test_Game();
-            Test_Die();
+            TestGame();
+            TestDie();
         }
 
         // Encapsulated Method
-        private void Test_Game()
+        private void TestGame()
         {
             // Create new game
             Game game = new Game();
@@ -49,7 +49,7 @@ namespace CMP1903_A1_2324
         }
 
         // Encapsulated Method
-        private void Test_Die()
+        private void TestDie()
         {
             // Created new Die
             Die dice_test = new Die();
