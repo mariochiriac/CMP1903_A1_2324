@@ -24,7 +24,7 @@ namespace CMP1903_A1_2324
 
         private List<int> _diceList = new List<int>(); // Creates a new encapsulated List
 
-        private int SumOfDices = 0; // Creates an integer that holds the sum of the dices
+        private int sumOfDices = 0; // Creates an integer that holds the sum of the dices
 
         public List<int> DiceList
         {
@@ -51,10 +51,10 @@ namespace CMP1903_A1_2324
             // A loop that checks how many dice rolled have been added to a list
             for (int i = 0; i < _diceList.Count; i++)
             {
-                SumOfDices += _diceList[i];
+                sumOfDices += _diceList[i];
             }
 
-            return SumOfDices;
+            return sumOfDices;
         }
 
         // An encapsulated method that outputs the summary data of the game
@@ -63,7 +63,7 @@ namespace CMP1903_A1_2324
             // Variables
             int lowest = _diceList[0]; // Initialises the lowest number to first element of array
             int highest = _diceList[0]; // Initialises the highest number to first element of array
-            int average = SumOfDices / _diceList.Count; // Gets the average number of the dices rolled
+            int average = sumOfDices / _diceList.Count; // Gets the average number of the dices rolled
 
             // A loop that performs a search for the lowest and highest number
             for (int i = 0; i < _diceList.Count; i++) // Checks each index in the array
