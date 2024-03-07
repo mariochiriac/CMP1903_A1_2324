@@ -14,15 +14,17 @@ namespace CMP1903_A1_2324
          */
 
         //Property
-        private static Random DiceValue = new Random(); // Holds current random value
+        private static Random _diceValue = new Random(); // Holds current random value
 
 
         //Method
 
         public int Roll()
         {
+            int current_value = _diceValue.Next(1,7);
+
             // Rolls the dice by creating a random integer value
-            return DiceValue.Next(1,7); // Returns a random value
+            return current_value; // Returns a random value
         }
 
 
