@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,51 @@ namespace CMP1903_A1_2324
 {
     internal class Game
     {
+        class SevensOut
+        {
+            // Objects
+            private Die die_1;
+            private Die die_2;
+            private Statistics stats;
+
+            // Generates new dices each time SevensOut is instantiated
+            public SevensOut()
+            {
+                die_1 = new Die();
+                die_2 = new Die();
+            }
+
+            // Main method that will be called
+            public void Play()
+            {
+                RollDices(die_1, die_2);
+            }
+
+            // Private method that rolls the dices
+            private void RollDices(Die die_1, Die die_2)
+            {
+                int rolled_dice1 = die_1.Roll();
+                int rolled_dice2 = die_1.Roll();
+
+                int total_dices = rolled_dice1 + rolled_dice2;
+                if (total_dices <= 7)
+                {
+                    Console.WriteLine($"GAME OVER! \nTotal of dices rolled: {total_dices}");
+                }
+                //
+            }
+
+        }
+
+        class ThreeOrMore
+        {
+
+        }
+
+
+
+
+
         /*
          * The Game class should create three die objects, roll them, sum and report the total of the three dice rolls.
          *
