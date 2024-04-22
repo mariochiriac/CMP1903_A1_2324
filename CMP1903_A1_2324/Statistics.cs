@@ -14,16 +14,27 @@ namespace CMP1903_A1_2324
         private int _PlayerOne_Highscore = 0;
         private int _PlayerTwo_Highscore = 0;
 
-        private int[] _PlayerOne { get; set; }
-        private int[] _PlayerTwo { get; set; }
+        private int[] _PlayerOne { get; set; } = { };
+        private int[] _PlayerTwo { get; set; } = { };
 
 
 
         public void AddDice(int playerid, int dice)
         {
-            if (playerid != 1 || playerid != 2)
-            {
-                Console.WriteLine("Please select a valid player id!");
+            switch (playerid) {
+                case 1:
+                    _PlayerOne.Append(dice);
+                    _Plays++;
+                    _PlayerOne_Highscore += dice;
+                    break;
+                case 2:
+                    _PlayerTwo.Append(dice);
+                    _Plays++;
+                    _PlayerTwo_Highscore += dice;
+                    break;
+                default:
+                    Console.WriteLine("Wrong player turn!");
+                    break;
             }
         }
     }

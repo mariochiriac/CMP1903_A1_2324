@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
 {
-    internal class Game
+    class Game
     {
         class SevensOut
         {
             // Objects
             private Die die_1;
             private Die die_2;
-            private Statistics stats;
+            private Statistics stats = new Statistics();
+            private int _playerid = 1;
 
             // Generates new dices each time SevensOut is instantiated
             public SevensOut()
@@ -36,11 +37,18 @@ namespace CMP1903_A1_2324
                 int rolled_dice2 = die_1.Roll();
 
                 int total_dices = rolled_dice1 + rolled_dice2;
-                if (total_dices <= 7)
-                {
-                    Console.WriteLine($"GAME OVER! \nTotal of dices rolled: {total_dices}");
+                if (rolled_dice1 == rolled_dice2) {
+                    stats.AddDice(_playerid, total_dices * 2);
                 }
-                //
+                else {
+                    if (total_dices <= 7) {
+                        Console.WriteLine($"Game Over! Total sum of dices: {total_dices}.");
+                    }
+                    else {
+                        stats.AddDice(_playerid, total_dices);
+                        Console.WriteLine($"Player {_playerid} has rolled {total_dices}");
+                    }
+                }
             }
 
         }
@@ -64,6 +72,8 @@ namespace CMP1903_A1_2324
         //Properties
 
         // Creates 3 Die objects
+        SevensOut sOut = new SevensOut();
+
         private Die dice = new Die();
         private Die dice_2 = new Die(); 
         private Die dice_3 = new Die();
@@ -152,6 +162,7 @@ namespace CMP1903_A1_2324
         // Main method, public, will be used to start the game
         public void StartGame()
         {
+            sOut.Play();
             RollDices(dice, dice_2, dice_3);
             Console.WriteLine("Sum of Dice Rolled: " + GetDiceTotal());
             GetSummary();
