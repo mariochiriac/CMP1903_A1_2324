@@ -9,50 +9,6 @@ namespace CMP1903_A1_2324
 {
     class Game
     {
-        class SevensOut
-        {
-            // Objects
-            private Die die_1;
-            private Die die_2;
-            private Statistics stats = new Statistics();
-            private int _playerid = 1;
-
-            // Generates new dices each time SevensOut is instantiated
-            public SevensOut()
-            {
-                die_1 = new Die();
-                die_2 = new Die();
-            }
-
-            // Main method that will be called
-            public void Play()
-            {
-                RollDices(die_1, die_2);
-            }
-
-            // Private method that rolls the dices
-            private void RollDices(Die die_1, Die die_2)
-            {
-                int rolled_dice1 = die_1.Roll();
-                int rolled_dice2 = die_1.Roll();
-
-                int total_dices = rolled_dice1 + rolled_dice2;
-                if (rolled_dice1 == rolled_dice2) {
-                    stats.AddDice(_playerid, total_dices * 2);
-                }
-                else {
-                    if (total_dices <= 7) {
-                        Console.WriteLine($"Game Over! Total sum of dices: {total_dices}.");
-                    }
-                    else {
-                        stats.AddDice(_playerid, total_dices);
-                        Console.WriteLine($"Player {_playerid} has rolled {total_dices}");
-                    }
-                }
-            }
-
-        }
-
         class ThreeOrMore
         {
 
@@ -162,11 +118,15 @@ namespace CMP1903_A1_2324
         // Main method, public, will be used to start the game
         public void StartGame()
         {
-            sOut.Play();
             RollDices(dice, dice_2, dice_3);
             Console.WriteLine("Sum of Dice Rolled: " + GetDiceTotal());
             GetSummary();
             ContinueGame();
+        }
+
+        public void StartSevensOut()
+        {
+            sOut.Play();
         }
     }
 }

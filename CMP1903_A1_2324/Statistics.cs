@@ -14,21 +14,20 @@ namespace CMP1903_A1_2324
         private int _PlayerOne_Highscore = 0;
         private int _PlayerTwo_Highscore = 0;
 
-        private int[] _PlayerOne { get; set; } = { };
-        private int[] _PlayerTwo { get; set; } = { };
-
-
+        private List<int> _PlayerOne = new List<int>();
+        private List<int> _PlayerTwo = new List<int>();
 
         public void AddDice(int playerid, int dice)
         {
             switch (playerid) {
                 case 1:
-                    _PlayerOne.Append(dice);
+                    _PlayerOne.Add(dice);
                     _Plays++;
                     _PlayerOne_Highscore += dice;
+                    Console.WriteLine($"Current Highscore: {_PlayerOne_Highscore}");
                     break;
                 case 2:
-                    _PlayerTwo.Append(dice);
+                    _PlayerTwo.Add(dice);
                     _Plays++;
                     _PlayerTwo_Highscore += dice;
                     break;
@@ -37,5 +36,6 @@ namespace CMP1903_A1_2324
                     break;
             }
         }
+
     }
 }
