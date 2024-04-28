@@ -9,6 +9,6 @@ namespace CMP1903_A1_2324
 {
     internal interface IGame
     {
-        void Play();
+        void StartGame();
     }
 }

@@ -126,7 +126,7 @@ namespace CMP1903_A1_2324
 
         public void StartSevensOut()
         {
-            sOut.Play();
+            sOut.StartGame();
         }
     }
 }

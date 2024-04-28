@@ -24,63 +24,103 @@ namespace CMP1903_A1_2324
         }
 
         // Main method that will be called
-        public void Play()
+        public void StartGame()
         {
-            RollDices(die_1, die_2);
-            PlayAgain();
+            PlayGame(); // Plays game
+            
         }
 
         // Private method that rolls the dices
         private void RollDices(Die die_1, Die die_2)
         {
+            // Roll the 2 die objects and store in variable
             int rolled_dice1 = die_1.Roll();
             int rolled_dice2 = die_2.Roll();
 
+            // Sum of 2 rolled dices
             int total_dices = rolled_dice1 + rolled_dice2;
-            if (rolled_dice1 == rolled_dice2)
+            if (rolled_dice1 == rolled_dice2) // Checks if it's a double
             {
-                stats.AddDice(_playerid, total_dices * 2);
+                stats.AddDice(_playerid, total_dices * 2); // Adds total of dices * 2 if it's a double to player
                 Console.WriteLine($"A double has been rolled. {total_dices * 2} has been added to Player {_playerid} total.");
                 Console.WriteLine($"Player {_playerid} current total: {GetCurrentTotal(_playerid)}");
             }
-            else
+            else // if it's not a double
             {
+                // Checks if its a 7 or less
                 if (total_dices <= 7)
                 {
-                    Console.WriteLine($"Game Over! Player {_playerid} has rolled: {total_dices}.");
+                    Console.WriteLine($"Game Over! Player {_playerid} has rolled: {total_dices}."); // Terminates player's turn
                     Console.WriteLine($"==== Player {_playerid} ended his streak with the total: {GetCurrentTotal(_playerid)} ====");
+                    // Checks if it's player 1 turn
                     if (_playerid == 1)
                     {
+                        // If it's player 1's turn and it's less than 7
+                        // Switches turn to player 2
                         _playerid = 2;
                         Console.WriteLine($"It is now Player {_playerid} turn!");
                     }
-                    else GetWinner();
+                    else GetWinner(); // If player 2's turn, it will end the game and get winner
+                }
+                else // If it's not a 7 or less
+                {
+                    stats.AddDice(_playerid, total_dices); // Adds the total of dices rolled to player
+                    Console.WriteLine($"Player {_playerid} has rolled {total_dices}");
+                    Console.WriteLine($"Player {_playerid} current total: {GetCurrentTotal(_playerid)}");
+                }
+            }
+            PlayGame(); // Will restart dice rolls
+        }
+
+        private void PlayGame()
+        {
+            while (gameStatus)
+            {
+                Console.WriteLine($"[Player {_playerid}] Type (Y) to roll the dice.");
+                string user_input = Console.ReadLine();
+
+                if (user_input.ToLower() == "y")
+                {
+                    RollDices(die_1, die_2);
+                    break;
                 }
                 else
                 {
-                    stats.AddDice(_playerid, total_dices);
-                    Console.WriteLine($"Player {_playerid} has rolled {total_dices}");
-                    Console.WriteLine($"Player {_playerid} current total: {GetCurrentTotal(_playerid)}");
+                    Console.WriteLine("Game Over!");
+                    GetWinner();
+                    break;
                 }
             }
         }
 
         private void PlayAgain()
         {
-            Console.WriteLine("Type (Y) to roll the dice.");
-            string user_input = Console.ReadLine();
-
-            while (gameStatus)
+            while (true)
             {
+                Console.WriteLine("== Type (Y) to restart Sevens Out! ==");
+                string user_input = Console.ReadLine();
+
                 if (user_input.ToLower() == "y")
                 {
-                    Play();
+                    gameStatus = true;
+                    ResetGame();
+                    PlayGame();
                     break;
                 }
-                else Console.WriteLine("Game Over!"); break;
+                else
+                {
+                    Console.WriteLine("Thanks for playing! GAME ENDED.");
+                    break;
+                }
             }
         }
 
+        private void ResetGame()
+        {
+            this._playerid = 1;
+            this.gameStatus = true;
+            stats.Reset();
+        }
 
         private void GetWinner()
         {
@@ -108,6 +148,7 @@ namespace CMP1903_A1_2324
                 stats.PlayerTwo_Score++;
                 Console.WriteLine($"The game is equal! Both players received a point.\nCurrent Score:\nPlayer 1: {stats.PlayerOne_Score}\nPlayer 2: {stats.PlayerTwo_Score}");
             }
+            PlayAgain();
         }
 
         private int GetCurrentTotal(int playerid)

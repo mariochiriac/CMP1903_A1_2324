@@ -39,5 +39,10 @@ namespace CMP1903_A1_2324
             }
         }
 
+        public void Reset()
+        {
+            _PlayerOneDices.Clear();
+            _PlayerTwoDices.Clear();
+        }
     }
 }
