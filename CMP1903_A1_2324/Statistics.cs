@@ -8,28 +8,30 @@ namespace CMP1903_A1_2324
 {
     public class Statistics
     {
+        // Private Objects
         private int _Plays = 0;
+        private int _PlayerOne_Score = 0;
+        private int _PlayerTwo_Score = 0;
+        private List<int> _PlayerOneDices = new List<int>();
+        private List<int> _PlayerTwoDices = new List<int>();
 
-
-        private int _PlayerOne_Highscore = 0;
-        private int _PlayerTwo_Highscore = 0;
-
-        private List<int> _PlayerOne = new List<int>();
-        private List<int> _PlayerTwo = new List<int>();
+        // Public Objects
+        public int Plays {  get { return _Plays; } set {  _Plays = value; } }
+        public int PlayerOne_Score { get { return _PlayerOne_Score; } set { _PlayerOne_Score = value;} }
+        public int PlayerTwo_Score { get { return _PlayerTwo_Score; } set { _PlayerTwo_Score = value;} }
+        public List<int> PlayerOneDices { get { return _PlayerOneDices; } set { _PlayerOneDices = value; } }
+        public List <int> PlayerTwoDices { get { return _PlayerTwoDices; } set { _PlayerTwoDices = value; } }
 
         public void AddDice(int playerid, int dice)
         {
             switch (playerid) {
                 case 1:
-                    _PlayerOne.Add(dice);
+                    _PlayerOneDices.Add(dice);
                     _Plays++;
-                    _PlayerOne_Highscore += dice;
-                    Console.WriteLine($"Current Highscore: {_PlayerOne_Highscore}");
                     break;
                 case 2:
-                    _PlayerTwo.Add(dice);
+                    _PlayerTwoDices.Add(dice);
                     _Plays++;
-                    _PlayerTwo_Highscore += dice;
                     break;
                 default:
                     Console.WriteLine("Wrong player turn!");
