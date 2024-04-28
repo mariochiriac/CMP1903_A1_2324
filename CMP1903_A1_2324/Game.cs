@@ -1,13 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
 {
-    internal class Game
+    class Game
     {
+        class ThreeOrMore
+        {
+
+        }
+
+
+
+
+
         /*
          * The Game class should create three die objects, roll them, sum and report the total of the three dice rolls.
          *
@@ -18,6 +28,8 @@ namespace CMP1903_A1_2324
         //Properties
 
         // Creates 3 Die objects
+        SevensOut sOut = new SevensOut();
+
         private Die dice = new Die();
         private Die dice_2 = new Die(); 
         private Die dice_3 = new Die();
@@ -110,6 +122,11 @@ namespace CMP1903_A1_2324
             Console.WriteLine("Sum of Dice Rolled: " + GetDiceTotal());
             GetSummary();
             ContinueGame();
+        }
+
+        public void StartSevensOut()
+        {
+            sOut.Play();
         }
     }
 }
