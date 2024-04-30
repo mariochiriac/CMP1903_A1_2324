@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
 {
-    class SevensOut : IGame
+    class SevensOut : Game, IGame
     {
         // Objects
         private Die die_1;
@@ -24,14 +24,14 @@ namespace CMP1903_A1_2324
         }
 
         // Main method that will be called
-        public void StartGame()
+        public override void StartGame()
         {
             PlayGame(); // Plays game
             
         }
 
         // Private method that rolls the dices
-        private void RollDices(Die die_1, Die die_2)
+        public void RollDices(Die die_1, Die die_2)
         {
             // Roll the 2 die objects and store in variable
             int rolled_dice1 = die_1.Roll();
@@ -72,27 +72,32 @@ namespace CMP1903_A1_2324
             PlayGame(); // Will restart dice rolls
         }
 
+        // Main Method for playing the game
         private void PlayGame()
         {
-            while (gameStatus)
+            while (gameStatus) // Checks if game is over
             {
-                Console.WriteLine($"[Player {_playerid}] Type (Y) to roll the dice.");
+                Console.WriteLine($"[Player {_playerid}] Type (Y) to roll the dice."); // Prompts user to roll the dice
                 string user_input = Console.ReadLine();
 
+                // Checks if user has entered "Y" or "y"
                 if (user_input.ToLower() == "y")
                 {
+                    // If user rolls dice, the roll dices method is called
                     RollDices(die_1, die_2);
                     break;
                 }
+                // If user has not entered "y" or "Y"
                 else
                 {
                     Console.WriteLine("Game Over!");
-                    GetWinner();
+                    GetWinner(); // Ends game if user decides to not roll dice and gets the winner for current round
                     break;
                 }
             }
         }
 
+        // Method that will prompt the user to play again
         private void PlayAgain()
         {
             while (true)
@@ -100,28 +105,32 @@ namespace CMP1903_A1_2324
                 Console.WriteLine("== Type (Y) to restart Sevens Out! ==");
                 string user_input = Console.ReadLine();
 
+                // Checks if user has entered "y"
                 if (user_input.ToLower() == "y")
                 {
-                    gameStatus = true;
-                    ResetGame();
-                    PlayGame();
+                    gameStatus = true; // Sets game status as true, meaning it can continue
+                    ResetGame(); // Resets statistics
+                    PlayGame(); // Starts the game
                     break;
                 }
                 else
                 {
+                    // Ends game
                     Console.WriteLine("Thanks for playing! GAME ENDED.");
                     break;
                 }
             }
         }
 
+        // Resets statistic so user can play again
         private void ResetGame()
         {
-            this._playerid = 1;
+            this._playerid = 1; // Switches back to player 1
             this.gameStatus = true;
             stats.Reset();
         }
 
+        // Method responsible for comparisons and determining the winner
         private void GetWinner()
         {
             // Variables

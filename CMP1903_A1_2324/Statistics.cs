@@ -39,6 +39,24 @@ namespace CMP1903_A1_2324
             }
         }
 
+        public void AddScore(int playerid, int score)
+        {
+            switch (playerid)
+            {
+                case 1:
+                    _PlayerOne_Score += score;
+                    _Plays++;
+                    break;
+                case 2:
+                    _PlayerTwo_Score += score;
+                    _Plays++;
+                    break;
+                default:
+                    Console.WriteLine("Wrong player turn!");
+                    break;
+            }
+        }
+
         public void Reset()
         {
             _PlayerOneDices.Clear();

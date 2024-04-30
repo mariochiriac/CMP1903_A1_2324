@@ -16,6 +16,8 @@ namespace CMP1903_A1_2324
              */
 
             Game game = new Game();
+            SevensOut sevensOut = new SevensOut();
+            ThreeOrMore threeOrMore = new ThreeOrMore();
             try
             {
                 int user_choice = 0;
@@ -25,8 +27,8 @@ namespace CMP1903_A1_2324
                 {
                     int.TryParse(Console.ReadLine(), out user_choice);
                         
-                    if (user_choice <= 2 && user_choice >= 1) break;
-                    else Console.WriteLine("Please select a valid game! (1 - 2)");
+                    if (user_choice <= 3 && user_choice >= 1) break;
+                    else Console.WriteLine("Please select a valid game! (1 - 3)");
                 }
 
                 switch (user_choice)
@@ -35,7 +37,10 @@ namespace CMP1903_A1_2324
                         game.StartGame();
                         break;
                     case 2:
-                        game.StartSevensOut();
+                        sevensOut.StartGame();
+                        break;
+                    case 3:
+                        threeOrMore.StartGame();
                         break;
                     default:
                         Console.WriteLine("Invalid game choice.");

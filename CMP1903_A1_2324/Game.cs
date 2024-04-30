@@ -9,15 +9,6 @@ namespace CMP1903_A1_2324
 {
     class Game
     {
-        class ThreeOrMore
-        {
-
-        }
-
-
-
-
-
         /*
          * The Game class should create three die objects, roll them, sum and report the total of the three dice rolls.
          *
@@ -28,7 +19,6 @@ namespace CMP1903_A1_2324
         //Properties
 
         // Creates 3 Die objects
-        SevensOut sOut = new SevensOut();
 
         private Die dice = new Die();
         private Die dice_2 = new Die(); 
@@ -46,7 +36,7 @@ namespace CMP1903_A1_2324
         //Methods
 
         // An encapsulated method that takes multiple Die objects in its parameters
-        private void RollDices(params Die[] dices)
+        public virtual void RollDices(params Die[] dices)
         {
             // A loop that checks each object in the parameters
             foreach (Die dice in dices)
@@ -70,7 +60,7 @@ namespace CMP1903_A1_2324
         }
 
         // An encapsulated method that outputs the summary data of the game
-        private void GetSummary()
+        public virtual void GetSummary()
         {
             // Variables
             int lowest = _diceList[0]; // Initialises the lowest number to first element of array
@@ -116,17 +106,12 @@ namespace CMP1903_A1_2324
         }
 
         // Main method, public, will be used to start the game
-        public void StartGame()
+        public virtual void StartGame()
         {
             RollDices(dice, dice_2, dice_3);
             Console.WriteLine("Sum of Dice Rolled: " + GetDiceTotal());
             GetSummary();
             ContinueGame();
-        }
-
-        public void StartSevensOut()
-        {
-            sOut.StartGame();
         }
     }
 }
