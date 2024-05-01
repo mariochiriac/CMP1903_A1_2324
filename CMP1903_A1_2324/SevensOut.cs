@@ -29,6 +29,7 @@ namespace CMP1903_A1_2324
         {
             try
             {
+                // Lets user know which game mode they selected
                 Console.WriteLine("================= SEVENS OUT =================");
                 if (isComputer == true) Console.WriteLine("========== GAME MODE: PLAYING AGAINST COMPUTER ==========");
                 else Console.WriteLine("========== GAME MODE: PLAYER 1 VS PLAYER 2 ==========");
@@ -89,7 +90,9 @@ namespace CMP1903_A1_2324
         {
             while (gameStatus) // Checks if game is over
             {
-                if (_playerid == 1 || !isComputer && _playerid == 2)
+                // Check if game mode is against player or computer
+                    // If player 1 turn, or player 2 is not robot, ask to roll dice
+                if (_playerid == 1 || !isComputer && _playerid == 2) 
                 {
                     Console.WriteLine($"[Player {_playerid}] Type (Y) to roll the dice."); // Prompts user to roll the dice
                     string user_input = Console.ReadLine();
@@ -109,11 +112,11 @@ namespace CMP1903_A1_2324
                         break;
                     }
                 }
-                else
+                else // If robot turn, it will roll straight away
                 {
                     Console.WriteLine();
                     Console.WriteLine("Computer is rolling...");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(1000); // Wait 1 second
                     RollDices(die_1, die_2);
                     break;
                 }
@@ -162,18 +165,18 @@ namespace CMP1903_A1_2324
             int player1_total = GetCurrentTotal(1);
             int player2_total = GetCurrentTotal(2);
 
-            gameStatus = false;
+            gameStatus = false; // Ends game so loops can stop
 
             Console.WriteLine($"GAME ENDED!\nPlayer 1 Total: {player1_total}\nPlayer 2 Total: {player2_total}");
 
             if (player1_total > player2_total)
             {
-                stats.PlayerOne_Score++;
+                stats.PlayerOne_Score++; // Accesses statistics class score
                 Console.WriteLine($"Player 1 has won!\nCurrent Score:\nPlayer 1: {stats.PlayerOne_Score}\nPlayer 2: {stats.PlayerTwo_Score}");
             }
             else if (player1_total < player2_total)
             {
-                stats.PlayerTwo_Score++;
+                stats.PlayerTwo_Score++; // Accesses statistics class score
                 Console.WriteLine($"Player 2 has won!\nCurrent Score:\nPlayer 1: {stats.PlayerOne_Score}\nPlayer 2: {stats.PlayerTwo_Score}");
             }
             else
@@ -185,6 +188,7 @@ namespace CMP1903_A1_2324
             PlayAgain();
         }
 
+        // Gets total of current dices rolled
         private int GetCurrentTotal(int playerid)
         {
             int total = 0;

@@ -26,11 +26,13 @@ namespace CMP1903_A1_2324
 
         public ThreeOrMore()
         {
+            // Add 5 Die Objects to List
             dieList.Add(new Die());
             dieList.Add(new Die());
             dieList.Add(new Die());
             dieList.Add(new Die());
             dieList.Add(new Die());
+            // Add 3 Die Objects to Temporary List
             tempDieList.Add(new Die());
             tempDieList.Add(new Die());
             tempDieList.Add(new Die());
@@ -42,7 +44,7 @@ namespace CMP1903_A1_2324
                 Console.WriteLine("================= THREE OR MORE =================");
                 if (isComputer == true) Console.WriteLine("========== GAME MODE: PLAYING AGAINST COMPUTER ==========");
                 else Console.WriteLine("========== GAME MODE: PLAYER 1 VS PLAYER 2 ==========");
-                PlayGame();
+                PlayGame(); // Plays game
             }
             catch (Exception ex)
             {
@@ -51,28 +53,31 @@ namespace CMP1903_A1_2324
             
         }
 
+        // Plays game
         private void PlayGame()
         {
+            // Check if players meet requirements to win game
             while (!isWinner)
             {
                 RollDices(dieList);
-                CheckWinner();
+                CheckWinner(); // After rolling, check if requirements met for winning
             }
-            GetSummary();
+            GetSummary(); // Outputs final scores
 
         }
 
         public void RollDices(List<Die> dieList)
         {
-            rolledDices.Clear();
+            rolledDices.Clear(); // Clears list for new rolled dice values
 
-            // Prompt the user to roll
+            // Prompt the user to roll if not a robot
             if (_PlayerID == 1 || !isComputer && _PlayerID == 2)
             {
                 Console.WriteLine();
                 Console.WriteLine($"[Player {_PlayerID}] Press Enter to roll the dice.");
                 Console.ReadLine(); // Wait for user input to roll the dice
             }
+            // If robot turn, it will roll without asking for input
             else
             {
                 Console.WriteLine();
@@ -95,6 +100,7 @@ namespace CMP1903_A1_2324
             }
         }
 
+        // Method to output dices rolled
         private void OutputDices(List<int> list)
         {
             Console.WriteLine($"=== [PLAYER {_PlayerID}] ROLLED DICES ===");
@@ -104,9 +110,14 @@ namespace CMP1903_A1_2324
             }
         }
 
+        // Method to check if user rolled duplicates
+            // 2 duplicates - 2 of a kind
+            // 3 duplicates - 3 of a kind
+            // 4 duplicates - 4 of a kind
+            // 5 duplicates - 5 of a kind
         private void FindDuplicates(List<int> list)
         {
-            // Grouping by number and counting duplicates
+            // LINQ Query to check and count duplicates
             var counts = list.GroupBy(x => x)
                              .Where(g => g.Count() > 1)
                              .Select(g => g.Count());
@@ -115,17 +126,21 @@ namespace CMP1903_A1_2324
             int maxDuplicates = counts.DefaultIfEmpty(0).Max();
             bool swapTurnAfterDuplicate = true;
 
+            // Different actions depending on number of duplicates
             switch (maxDuplicates)
             {
                 case 2:
                     Console.WriteLine($"[Player {_PlayerID}] 2 of a kind, try again");
                     while (true)
                     {
+                        // Check if it's robot turn
                         if (isComputer && _PlayerID == 2)
                         {
+                            // Generate random value
                             Random random = new Random();
                             int random_choice = random.Next(1, 3);
 
+                            // If 2 of a kind, reroll depending on random value
                             if (random_choice == 1)
                             {
                                 Console.WriteLine("Computer has rolled the remaining 3 dices.");
@@ -139,6 +154,7 @@ namespace CMP1903_A1_2324
                                 break;
                             }
                         }
+                        // Checks if it's player's turn
                         else
                         {
                             int user_input = 0;
@@ -186,9 +202,9 @@ namespace CMP1903_A1_2324
                 SwapTurn();
             }
 
-        // Deciding based on the maximum count
     }
 
+        // Swap player turn
         public void SwapTurn()
         {
             if (_PlayerID == 1) _PlayerID = 2;
@@ -196,11 +212,14 @@ namespace CMP1903_A1_2324
             
         }
 
+        // Check if requirement met for winning game
         public void CheckWinner()
         {
             if (stats.PlayerOne_Score >= 20 || stats.PlayerTwo_Score >= 20) isWinner = true;
         }
 
+        // Overrides method of parent class
+        // Outputs summary
         public override void GetSummary()
         {
             int winner = _PlayerID;
