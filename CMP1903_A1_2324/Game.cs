@@ -20,19 +20,20 @@ namespace CMP1903_A1_2324
 
         // Creates 3 Die objects
 
-        private Die dice = new Die();
-        private Die dice_2 = new Die(); 
-        private Die dice_3 = new Die();
+        protected Die dice = new Die();
+        protected Die dice_2 = new Die(); 
+        protected Die dice_3 = new Die();
 
-        private List<int> _diceList = new List<int>(); // Creates a new encapsulated List
+        protected List<int> _diceList = new List<int>(); // Creates a new encapsulated List
 
-        private int sumOfDices = 0; // Creates an integer that holds the sum of the dices
+        protected int sumOfDices = 0; // Creates an integer that holds the sum of the dices
 
         public List<int> DiceList
         {
             get { return _diceList; }
         }
 
+        public bool isComputer;
         //Methods
 
         // An encapsulated method that takes multiple Die objects in its parameters

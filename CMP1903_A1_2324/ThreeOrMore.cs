@@ -5,6 +5,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
@@ -36,8 +37,18 @@ namespace CMP1903_A1_2324
         }
         public override void StartGame()
         {
-            Console.WriteLine("================= THREE OR MORE =================");
-            PlayGame();
+            try
+            {
+                Console.WriteLine("================= THREE OR MORE =================");
+                if (isComputer == true) Console.WriteLine("========== GAME MODE: PLAYING AGAINST COMPUTER ==========");
+                else Console.WriteLine("========== GAME MODE: PLAYER 1 VS PLAYER 2 ==========");
+                PlayGame();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
 
         private void PlayGame()
@@ -47,7 +58,8 @@ namespace CMP1903_A1_2324
                 RollDices(dieList);
                 CheckWinner();
             }
-            // get final summary
+            GetSummary();
+
         }
 
         public void RollDices(List<Die> dieList)
@@ -55,10 +67,18 @@ namespace CMP1903_A1_2324
             rolledDices.Clear();
 
             // Prompt the user to roll
-            Console.WriteLine();
-            Console.WriteLine($"[Player {_PlayerID}] Press Enter to roll the dice.");
-            Console.ReadLine(); // Wait for user input to roll the dice
-
+            if (_PlayerID == 1 || !isComputer && _PlayerID == 2)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"[Player {_PlayerID}] Press Enter to roll the dice.");
+                Console.ReadLine(); // Wait for user input to roll the dice
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Computer is rolling...");
+                Thread.Sleep(1500);
+            }
             // If no one met the points to win the game, continue
             if (!isWinner) // Check if there is a winner
             {
@@ -93,6 +113,7 @@ namespace CMP1903_A1_2324
 
             // Finding the maximum count of duplicates
             int maxDuplicates = counts.DefaultIfEmpty(0).Max();
+            bool swapTurnAfterDuplicate = true;
 
             switch (maxDuplicates)
             {
@@ -100,94 +121,73 @@ namespace CMP1903_A1_2324
                     Console.WriteLine($"[Player {_PlayerID}] 2 of a kind, try again");
                     while (true)
                     {
-                        int user_input = 0;
-                        Console.WriteLine($"[Player {_PlayerID}] You have only managed to roll a 2-of-a-kind.\n(1) Roll the rest of the 3 dices || (2) Roll all dices again");
-                        int.TryParse(Console.ReadLine(), out user_input);
+                        if (isComputer && _PlayerID == 2)
+                        {
+                            Random random = new Random();
+                            int random_choice = random.Next(1, 3);
 
-                        if (user_input == 1)
-                        {
-                            RollDices(tempDieList);
-                            break;
-                        }
-                        else if (user_input == 2)
-                        {
-                            RollDices(dieList);
-                            break;
+                            if (random_choice == 1)
+                            {
+                                Console.WriteLine("Computer has rolled the remaining 3 dices.");
+                                RollDices(tempDieList);
+                                break;
+                            }
+                            else if (random_choice == 2)
+                            {
+                                Console.WriteLine("Computer has rolled rerolled all the dices.");
+                                RollDices(dieList);
+                                break;
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("Please enter a valid option! (1 - 2)");
-                        }
+                            int user_input = 0;
+                            Console.WriteLine($"[Player {_PlayerID}] You have only managed to roll a 2-of-a-kind.\n(1) Roll the remaining 3 dices || (2) Roll all dices again");
+                            int.TryParse(Console.ReadLine(), out user_input);
 
+                            if (user_input == 1)
+                            {
+                                RollDices(tempDieList);
+                                break;
+                            }
+                            else if (user_input == 2)
+                            {
+                                RollDices(dieList);
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter a valid option! (1 - 2)");
+                            }
+                        }
                     }
+                    swapTurnAfterDuplicate = false; // No need to swap turn after this case
                     break;
                 case 3:
-                    Console.WriteLine($"[Player {_PlayerID}] 3 of a kind");
+                    stats.AddScore(_PlayerID, 3);
+                    Console.WriteLine($"[Player {_PlayerID}] Rolled 3 of a kind.\n+ 3 points earned.\n[Player {_PlayerID}] Current Points: {stats.GetScore(_PlayerID)}");
                     break;
                 case 4:
-                    Console.WriteLine($"[Player {_PlayerID}] 4 of a kind");
+                    stats.AddScore(_PlayerID, 6);
+                    Console.WriteLine($"[Player {_PlayerID}] Rolled 4 of a kind.\n+ 6 points earned.\n[Player {_PlayerID}] Current Points: {stats.GetScore(_PlayerID)}");
                     break;
                 case 5:
-                    Console.WriteLine($"[Player {_PlayerID}] 5 of a kind");
+                    stats.AddScore(_PlayerID, 12);
+                    Console.WriteLine($"[Player {_PlayerID}] Rolled 5 of a kind.\n+ 12 points earned.\n[Player {_PlayerID}] Current Points: {stats.GetScore(_PlayerID)}");
                     break;
                 default:
-                    Console.WriteLine("No Duplicates");
+                    Console.WriteLine($"No Duplicates\n[Player {_PlayerID}] Current Points: {stats.GetScore(_PlayerID)}");
                     break;
             }
-            SwapTurn();
 
-
-
-
-            // Deciding based on the maximum count
-            /*
-            if (maxDuplicates < 2)
+            // Swap turn after the current player's turn, if needed
+            if (swapTurnAfterDuplicate)
             {
-                Console.WriteLine($"[Player {_PlayerID}] No duplicates");
-            }
-            else if (maxDuplicates == 2)
-            {
-                Console.WriteLine($"[Player {_PlayerID}] 2 of a kind, try again");
-                while (true)
-                {
-                    int user_input = 0;
-                    Console.WriteLine($"[Player {_PlayerID}] You have only managed to roll a 2-of-a-kind.\n(1) Roll the rest of the 3 dices || (2) Roll all dices again");
-                    int.TryParse(Console.ReadLine(), out user_input);
-
-                    if (user_input == 1)
-                    {
-                        RollDices(tempDieList);
-                        break;
-                    }
-                    else if (user_input == 2)
-                    {
-                        RollDices(dieList);
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid option! (1 - 2)");
-                    }
-
-                }
-            }
-            else if (maxDuplicates == 3)
-            {
-                Console.WriteLine($"[Player {_PlayerID}] 3 of a kind");
-            }
-            else if (maxDuplicates == 4)
-            {
-                Console.WriteLine($"[Player {_PlayerID}] 4 of a kind");
-            }
-            else if (maxDuplicates == 5)
-            {
-                Console.WriteLine($"[Player {_PlayerID}] 5 of a kind");
+                SwapTurn();
             }
 
-            // Swap turn after the current player's turn
-            SwapTurn();
-            */
-        }
+        // Deciding based on the maximum count
+    }
 
         public void SwapTurn()
         {
@@ -198,18 +198,15 @@ namespace CMP1903_A1_2324
 
         public void CheckWinner()
         {
-            switch (_PlayerID)
-            {
-                case 1:
-                    if (stats.PlayerOne_Score >= 20) isWinner = true;
-                    break;
-                case 2:
-                    if (stats.PlayerTwo_Score >= 20) isWinner = true;
-                    break;
-                default:
-                    Console.WriteLine("Wrong player selected!");
-                    break;
-            }
+            if (stats.PlayerOne_Score >= 20 || stats.PlayerTwo_Score >= 20) isWinner = true;
+        }
+
+        public override void GetSummary()
+        {
+            int winner = _PlayerID;
+            if (isWinner) Console.WriteLine($"Player {winner} HAS WON THE GAME!");
+            Console.WriteLine($"Player 1 points: {stats.PlayerOne_Score}");
+            Console.WriteLine($"Player 2 points: {stats.PlayerTwo_Score}");
         }
     }
 }

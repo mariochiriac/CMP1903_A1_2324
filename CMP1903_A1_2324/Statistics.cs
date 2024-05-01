@@ -57,7 +57,21 @@ namespace CMP1903_A1_2324
             }
         }
 
-        public void Reset()
+        public int GetScore(int playerid)
+        {
+            switch (playerid)
+            {
+                case 1:
+                    return _PlayerOne_Score;
+                case 2:
+                    return _PlayerTwo_Score;
+                default:
+                    Console.WriteLine("Wrong player!");
+                    return 0;
+            }
+        }
+
+        public void ResetDices()
         {
             _PlayerOneDices.Clear();
             _PlayerTwoDices.Clear();

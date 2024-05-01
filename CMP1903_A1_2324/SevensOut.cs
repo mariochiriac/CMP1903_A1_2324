@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
@@ -26,7 +27,18 @@ namespace CMP1903_A1_2324
         // Main method that will be called
         public override void StartGame()
         {
-            PlayGame(); // Plays game
+            try
+            {
+                Console.WriteLine("================= SEVENS OUT =================");
+                if (isComputer == true) Console.WriteLine("========== GAME MODE: PLAYING AGAINST COMPUTER ==========");
+                else Console.WriteLine("========== GAME MODE: PLAYER 1 VS PLAYER 2 ==========");
+                PlayGame(); // Plays game
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
             
         }
 
@@ -50,7 +62,7 @@ namespace CMP1903_A1_2324
                 // Checks if its a 7 or less
                 if (total_dices <= 7)
                 {
-                    Console.WriteLine($"Game Over! Player {_playerid} has rolled: {total_dices}."); // Terminates player's turn
+                    Console.WriteLine($"Turn Over! Player {_playerid} has rolled less than seven! (Rolled {total_dices})"); // Terminates player's turn
                     Console.WriteLine($"==== Player {_playerid} ended his streak with the total: {GetCurrentTotal(_playerid)} ====");
                     // Checks if it's player 1 turn
                     if (_playerid == 1)
@@ -77,23 +89,35 @@ namespace CMP1903_A1_2324
         {
             while (gameStatus) // Checks if game is over
             {
-                Console.WriteLine($"[Player {_playerid}] Type (Y) to roll the dice."); // Prompts user to roll the dice
-                string user_input = Console.ReadLine();
-
-                // Checks if user has entered "Y" or "y"
-                if (user_input.ToLower() == "y")
+                if (_playerid == 1 || !isComputer && _playerid == 2)
                 {
-                    // If user rolls dice, the roll dices method is called
+                    Console.WriteLine($"[Player {_playerid}] Type (Y) to roll the dice."); // Prompts user to roll the dice
+                    string user_input = Console.ReadLine();
+
+                    // Checks if user has entered "Y" or "y"
+                    if (user_input.ToLower() == "y")
+                    {
+                        // If user rolls dice, the roll dices method is called
+                        RollDices(die_1, die_2);
+                        break;
+                    }
+                    // If user has not entered "y" or "Y"
+                    else
+                    {
+                        Console.WriteLine($"Player {_playerid} has not rolled the dice. Game Over!");
+                        GetWinner(); // Ends game if user decides to not roll dice and gets the winner for current round
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Computer is rolling...");
+                    Thread.Sleep(1000);
                     RollDices(die_1, die_2);
                     break;
                 }
-                // If user has not entered "y" or "Y"
-                else
-                {
-                    Console.WriteLine("Game Over!");
-                    GetWinner(); // Ends game if user decides to not roll dice and gets the winner for current round
-                    break;
-                }
+                
             }
         }
 
@@ -116,6 +140,7 @@ namespace CMP1903_A1_2324
                 else
                 {
                     // Ends game
+                    Console.WriteLine("You have chosen not to continue playing Sevens Out.");
                     Console.WriteLine("Thanks for playing! GAME ENDED.");
                     break;
                 }
@@ -127,7 +152,7 @@ namespace CMP1903_A1_2324
         {
             this._playerid = 1; // Switches back to player 1
             this.gameStatus = true;
-            stats.Reset();
+            stats.ResetDices();
         }
 
         // Method responsible for comparisons and determining the winner

@@ -21,7 +21,7 @@ namespace CMP1903_A1_2324
             try
             {
                 int user_choice = 0;
-                Console.WriteLine("Select Game: \n1. Base Game\n2. Sevens Out\n3. To be implemented");
+                Console.WriteLine("Select Game: \n1. Base Game\n2. Sevens Out\n3. Three or More");
 
                 while (true)
                 {
@@ -31,15 +31,39 @@ namespace CMP1903_A1_2324
                     else Console.WriteLine("Please select a valid game! (1 - 3)");
                 }
 
+                bool isAgainstComputer = false;
+                int game_mode = 0;
+                Console.WriteLine("Play Modes:\n(1) Player vs Player\n(2) Player vs Computer");
+
+                while (true)
+                {
+                    int.TryParse(Console.ReadLine(), out game_mode);
+
+                    if (game_mode == 1) 
+                    {
+                        isAgainstComputer = false; 
+                        break; 
+                    }
+                    else if (game_mode == 2)
+                    {
+                        isAgainstComputer = true;
+                        break;
+                    }
+                    else Console.WriteLine("Please select a valid game mode! (1 or 2)");
+                }
+
                 switch (user_choice)
                 {
                     case 1:
+                        game.isComputer = isAgainstComputer;
                         game.StartGame();
                         break;
                     case 2:
+                        sevensOut.isComputer = isAgainstComputer;
                         sevensOut.StartGame();
                         break;
                     case 3:
+                        threeOrMore.isComputer = isAgainstComputer;
                         threeOrMore.StartGame();
                         break;
                     default:
