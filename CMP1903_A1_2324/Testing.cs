@@ -111,8 +111,8 @@ namespace CMP1903_A1_2324
             List<int> list_20 = new List<int>();
             List<int> list_10 = new List<int>();
 
-            list_20.Add(10); list_10.Add(10); // Adds score 20 to list
-            list_10.Add(5); list_10.Add(5); // Adds score 10 to list
+            list_20.Add(20); // Adds score 20 to list
+            list_10.Add(10); // Adds score 10 to list
 
             sevensOut.Stats.PlayerOneDices = list_20; // Sets Player 1 total dices as 20
             sevensOut.Stats.PlayerTwoDices = list_10; // Sets player 2 total dices as 10
@@ -121,13 +121,13 @@ namespace CMP1903_A1_2324
             int player_2_dice_score = sevensOut.GetCurrentTotal(2);
             Console.WriteLine("====== [TEST VERSION] CALCULATING WINNER... ======");
             sevensOut.GetWinner(); // Gets winner, player 1 should have a higher score than player 2
-            Debug.Assert(sevensOut.Gamestatus != false, "Game status has not been set to false once the winner has been checked!");
+            Debug.Assert(sevensOut.Gamestatus == false, "Game status has not been set to false once the winner has been checked!");
 
             int player_1_final = sevensOut.Stats.PlayerOne_Score; // Stores final score of player 1 
             int player_2_final = sevensOut.Stats.PlayerTwo_Score; // Stores final score of player 2
 
             // When comparing scores and total dices, player 1 should have a better score and should win the game, giving him a Player Score 1
-            Debug.Assert(player_1_dice_score > player_2_dice_score, "Sevens Out: Player 1 (SCORE 20) should have a higher score than Player 2 (SCORE 10).");
+            Debug.Assert(player_1_dice_score > player_2_dice_score, "Sevens Out: Player 1 (SCORE 20) does not a higher score than Player 2 (SCORE 10).");
             Debug.Assert(player_1_final > player_2_final, "Sevens Out: Player 1 should have won the game (SCORE 20), not Player 2 (SCORE 10).");
 
             Console.WriteLine("Sevens Out: Winner has been calculated successfully.");
