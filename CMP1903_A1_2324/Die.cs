@@ -19,7 +19,7 @@ namespace CMP1903_A1_2324
 
         //Method
 
-        public int Roll()
+        public virtual int Roll()
         {
             int current_value = _diceValue.Next(1,7);
 
