@@ -23,14 +23,14 @@ namespace CMP1903_A1_2324
             {
                 // Allow user to select game
                 int user_choice = 0;
-                Console.WriteLine("Select Game: \n1. Base Game\n2. Sevens Out\n3. Three or More");
+                Console.WriteLine("Select Game: \n1. Base Game\n2. Sevens Out\n3. Three or More\n4. Test Version");
 
                 // Ensures user enters appropriate input
                 while (true)
                 {
                     int.TryParse(Console.ReadLine(), out user_choice);
                         
-                    if (user_choice <= 3 && user_choice >= 1) break;
+                    if (user_choice <= 4 && user_choice >= 1) break;
                     else Console.WriteLine("Please select a valid game! (1 - 3)"); // Only breaks loop if user inputs 1 to 3
                 }
 
@@ -77,6 +77,10 @@ namespace CMP1903_A1_2324
                     case 3:
                         threeOrMore.isComputer = isAgainstComputer;
                         threeOrMore.StartGame();
+                        break;
+                    case 4:
+                        Testing test = new Testing();
+                        test.StartTest();
                         break;
                     default:
                         Console.WriteLine("Invalid game choice.");

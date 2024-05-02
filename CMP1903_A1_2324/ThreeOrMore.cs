@@ -13,7 +13,7 @@ namespace CMP1903_A1_2324
     internal class ThreeOrMore : Game, IGame
     {
         // Objects
-        Statistics stats = new Statistics();
+        Statistics stats;
         public List<Die> dieList = new List<Die>();
         public List<int> rolledDices = new List<int>();
         public List<int> duplicateDices = new List<int>();
@@ -23,7 +23,7 @@ namespace CMP1903_A1_2324
         // Variables
         public int _PlayerID = 1;
         public bool isWinner = false;
-
+        public Statistics Stats { get { return this.stats; } set { this.stats = value; } }
         public ThreeOrMore()
         {
             // Add 5 Die Objects to List
@@ -36,6 +36,7 @@ namespace CMP1903_A1_2324
             tempDieList.Add(new Die());
             tempDieList.Add(new Die());
             tempDieList.Add(new Die());
+            stats = new Statistics();
         }
         public override void StartGame()
         {
@@ -224,6 +225,7 @@ namespace CMP1903_A1_2324
         {
             int winner = _PlayerID;
             if (isWinner) Console.WriteLine($"Player {winner} HAS WON THE GAME!");
+            Console.WriteLine($"TOTAL PLAYS: {stats.Plays}");
             Console.WriteLine($"Player 1 points: {stats.PlayerOne_Score}");
             Console.WriteLine($"Player 2 points: {stats.PlayerTwo_Score}");
         }
